@@ -135,9 +135,9 @@ function HomeContent() {
                     Sign In
                   </button>
                 )}
-                <button onClick={() => setIsAuthOpen(true)} className="bg-gray-900 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-black transition-all hover:scale-105 active:scale-95">
-                  {user ? "Dashboard" : "Book a call"}
-                </button>
+                  <Link href="/dashboard" className="bg-gray-900 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-black transition-all hover:scale-105 active:scale-95">
+                    {user ? "Dashboard" : "Book a call"}
+                  </Link>
               </div>
             </header>
 
