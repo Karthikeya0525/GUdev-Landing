@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 import { generatePDF } from '@/lib/pdfGenerator';
 
-// Initialize Supabase
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = (supabaseUrl && supabaseKey && supabaseUrl.startsWith('http')) 
-  ? createClient(supabaseUrl, supabaseKey) 
-  : null;
 
 export async function POST(req: NextRequest) {
   try {
@@ -94,8 +88,13 @@ export async function POST(req: NextRequest) {
     if (supabase) {
       try {
         const { data: dbData, error: dbError } = await supabase
-          .from('generations')
-          .insert([{ prompt, result: prdData, created_at: new Date().toISOString() }])
+          .from('projects')
+          .insert([{ 
+            name: prdData.project_name,
+            prompt, 
+            data: prdData, 
+            created_at: new Date().toISOString() 
+          }])
           .select('id')
           .single();
         
