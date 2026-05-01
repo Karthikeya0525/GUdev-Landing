@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, Zap, ImagePlus, X } from "lucide-react";
 
 interface PromptInputProps {

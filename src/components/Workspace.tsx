@@ -6,7 +6,7 @@ import Editor from "./Editor";
 import Preview from "./Preview";
 import WebPreview from "./WebPreview";
 import { Button } from "./ui/button";
-import { Download, RefreshCw, ArrowLeft, Code2, FileText, Monitor, Smartphone } from "lucide-react";
+import { Download, RefreshCw, ArrowLeft, Code2, FileText, Monitor, Smartphone, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence } from "framer-motion";
 import ARPreview from "./ARPreview";
