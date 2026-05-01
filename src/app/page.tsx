@@ -91,9 +91,62 @@ function HomeContent() {
   };
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden font-sans bg-[#F8FAFC]">
+    <main className="min-h-screen relative overflow-x-hidden font-sans bg-[#FBFBFE]">
+      {/* 🎭 PREMIUM BACKGROUND ORNAMENTATION */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <motion.div 
+          animate={{ 
+            x: [0, 100, 0], 
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-24 -left-24 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full" 
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, -100, 0], 
+            y: [0, 80, 0],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 -right-24 w-[500px] h-[500px] bg-purple-500/10 blur-[150px] rounded-full" 
+        />
+        <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay" style={{ backgroundImage: `url('https://grainy-gradients.vercel.app/noise.svg')` }} />
+      </div>
 
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+
+      <AnimatePresence>
+        {loading && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-white/80 backdrop-blur-2xl flex flex-col items-center justify-center"
+          >
+            <div className="relative">
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="w-32 h-32 border-t-2 border-b-2 border-indigo-600 rounded-full"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <Bot className="w-10 h-10 text-indigo-600 animate-pulse" />
+              </div>
+            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-8 text-center"
+            >
+               <h3 className="text-xl font-black text-gray-900 uppercase tracking-tighter">Orchestrating Agents</h3>
+               <p className="text-sm font-bold text-indigo-500 uppercase tracking-widest mt-2">Finalizing Digital Strategy...</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence mode="wait">
         {step === 'input' && (
@@ -105,7 +158,7 @@ function HomeContent() {
             className="flex flex-col relative z-10 min-h-screen"
           >
             {/* Unified Premium Header */}
-            <header className="px-6 md:px-12 py-4 flex justify-between items-center w-full border-b border-gray-200/50 bg-white/80 backdrop-blur-2xl fixed top-0 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
+            <header className="px-6 md:px-12 py-4 flex justify-between items-center w-full border-b border-white/20 bg-white/60 backdrop-blur-3xl fixed top-0 z-50 shadow-[0_8px_32px_rgba(0,0,0,0.05)] ring-1 ring-black/5">
               <div className="flex items-center gap-3">
                 <Link href="/">
                   <div className="w-10 h-10 bg-gray-900 hover:bg-black transition-colors rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-xl shadow-gray-900/10 border border-gray-800 cursor-pointer">
@@ -152,27 +205,54 @@ function HomeContent() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] bg-gradient-to-r from-indigo-100/30 to-purple-100/20 rounded-full blur-[150px] -z-10"></div>
 
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="relative"
               >
-                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-100 text-gray-900 text-xs font-black uppercase tracking-[0.3em] shadow-2xl mb-12">
-                  <Sparkles className="w-4 h-4 text-indigo-500" />
-                  Agentic UX v2.0 Released
-                </div>
+                {/* Floating Lab Badge */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/40 backdrop-blur-xl border border-white/50 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 mb-10 shadow-lg shadow-indigo-500/5 ring-1 ring-black/5"
+                >
+                  <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                  Agentic Discovery Lab v4.0
+                </motion.div>
 
-                <h1 className="text-6xl md:text-[110px] font-black tracking-tighter mb-10 text-gray-900 leading-[0.85] max-w-6xl mx-auto uppercase">
-                  Automate your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">entire</span> product cycle.
+                <h1 className="text-5xl md:text-8xl font-black tracking-tight text-gray-900 leading-[0.9] mb-10 uppercase">
+                   Architect Your <br />
+                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600">
+                    Digital Empire.
+                   </span>
                 </h1>
 
-                <p className="text-gray-400 text-xl md:text-3xl leading-tight max-w-3xl mx-auto font-medium mb-16 tracking-tight">
-                  We orchestrate 9 specialized AI agents to extract investor-ready PRDs, design assets, and code in seconds.
+                <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium mb-16 tracking-tight">
+                  The first AI-native design engine that transforms raw intent into professional PRDs and production-ready React ecosystems.
                 </p>
 
                 {/* Agentic Generator Input - Enhanced */}
                 <div className="max-w-4xl mx-auto mb-24 relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-400 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition-opacity" />
-                  <div className="relative bg-white p-3 rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.08)] border border-gray-100">
+                  
+                  {/* Decorative Floaters */}
+                  <motion.div 
+                    animate={{ y: [0, -10, 0] }} 
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="absolute -top-12 -left-12 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block"
+                  >
+                    <Zap className="w-6 h-6 text-yellow-500" />
+                  </motion.div>
+                  <motion.div 
+                    animate={{ y: [0, 10, 0] }} 
+                    transition={{ duration: 5, repeat: Infinity }}
+                    className="absolute -bottom-8 -right-12 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block"
+                  >
+                    <Bot className="w-6 h-6 text-indigo-500" />
+                  </motion.div>
+
+                  <div className="relative bg-white/70 backdrop-blur-xl p-3 rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.08)] border border-white/50">
                     <PromptInput onSubmit={handleGenerate} isLoading={loading} initialValue={templatePrompt} />
                   </div>
                 </div>
@@ -311,6 +391,10 @@ function HomeContent() {
                         </div>
                       </div>
                     );
+                  })}
+                </div>
+
+                <div className="text-center mb-16">
                   <h2 className="text-sm font-black text-indigo-600 uppercase tracking-[0.3em] mb-6">Orchestration Layer</h2>
                   <h3 className="text-5xl md:text-8xl font-black tracking-tighter text-gray-900 uppercase leading-[0.85]">
                     Meet your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Swarm.</span>
@@ -465,6 +549,68 @@ function BenefitLine({ title, desc }: { title: string, desc: string }) {
         <h4 className="font-bold text-gray-100 mb-1">{title}</h4>
         <p className="text-gray-400 text-sm">{desc}</p>
       </div>
+    </div>
+  );
+}
+
+function AgentCard({ name, role, desc, color }: { name: string, role: string, desc: string, color: string }) {
+  return (
+    <div className="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
+      <div className={`w-12 h-12 ${color} rounded-2xl mb-6 shadow-lg shadow-indigo-100 flex items-center justify-center text-white`}>
+        <Bot size={24} />
+      </div>
+      <h4 className="text-xl font-bold mb-1 text-gray-900">{name}</h4>
+      <p className="text-xs font-black text-indigo-600 uppercase tracking-widest mb-4">{role}</p>
+      <p className="text-gray-500 text-sm font-medium leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function TimelineStep({ number, title, desc, active }: { number: string, title: string, desc: string, active?: boolean }) {
+  return (
+    <div className="flex gap-8 md:gap-16 items-start">
+      <div className={cn(
+        "text-6xl md:text-8xl font-black tracking-tighter shrink-0",
+        active ? "text-indigo-600" : "text-gray-200"
+      )}>
+        {number}
+      </div>
+      <div className="pt-4">
+        <h4 className="text-2xl md:text-4xl font-black text-gray-900 mb-4 uppercase">{title}</h4>
+        <p className="text-gray-500 text-lg md:text-xl font-medium max-w-xl">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function FAQItem({ q, a }: { q: string, a: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-gray-100 pb-8 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-lg font-bold text-gray-900">{q}</h4>
+        <div className={cn("transition-transform duration-300", isOpen ? "rotate-45" : "")}>
+          <Rocket size={20} className="text-indigo-500" />
+        </div>
+      </div>
+      {isOpen && (
+        <p className="text-gray-500 font-medium leading-relaxed animate-in slide-in-from-top-2 duration-300">
+          {a}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function FooterColumn({ title, links }: { title: string, links: string[] }) {
+  return (
+    <div>
+      <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-8">{title}</h4>
+      <ul className="space-y-4 text-sm font-bold text-gray-400">
+        {links.map(l => (
+          <li key={l} className="hover:text-white cursor-pointer transition-colors">{l}</li>
+        ))}
+      </ul>
     </div>
   );
 }
