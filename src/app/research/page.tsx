@@ -53,13 +53,17 @@ export default function ResearchPage() {
       if (response.ok) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
         
-        // Simple heuristic to check if ready
-        if (data.reply.toLowerCase().includes("would you like to proceed") || data.reply.toLowerCase().includes("generate your blueprint")) {
+        // Smarter heuristic for the new strict protocol
+        if (
+          data.reply.includes("RESEARCH COMPLETE") || 
+          data.reply.toLowerCase().includes("would you like to proceed") || 
+          messages.length >= 8 // Stop after ~4 exchanges for MVP speed
+        ) {
           setIsReadyToGenerate(true);
           setResearchProgress(100);
         } else {
-          // Increment progress slightly for each exchange
-          setResearchProgress(prev => Math.min(prev + 20, 90));
+          // Increment progress based on exchange depth
+          setResearchProgress(prev => Math.min(prev + 25, 95));
         }
       } else {
         alert(data.error || "Something went wrong.");
@@ -121,6 +125,12 @@ export default function ResearchPage() {
         </div>
 
         <div className="flex items-center gap-4">
+          <button
+            onClick={generatePRDFromResearch}
+            className="hidden sm:flex text-[10px] font-black text-gray-400 hover:text-indigo-500 uppercase tracking-widest transition-colors mr-4"
+          >
+            Skip to Orchestration
+          </button>
           <AnimatePresence>
             {isReadyToGenerate && (
               <motion.button

@@ -151,7 +151,6 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
             </button>
           </div>
         </div>
-        </div>
 
         <AnimatePresence>
           {isArMode && (
@@ -255,7 +254,7 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
 }
 
 // Specialized Tab Button Component
-function TabButton({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) {
+function TabButton({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: React.ReactNode }) {
     return (
         <button 
             onClick={onClick}
