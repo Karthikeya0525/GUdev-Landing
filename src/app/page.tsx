@@ -36,6 +36,13 @@ function HomeContent() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Auto-trigger generation if prompt is in URL (from Deep Dive)
+  useEffect(() => {
+    if (templatePrompt && step === 'input' && !data && !loading) {
+      handleGenerate(templatePrompt);
+    }
+  }, [templatePrompt, step, data, loading]);
+
   const handleGenerate = async (prompt: string) => {
     setLoading(true);
     try {
@@ -304,47 +311,118 @@ function HomeContent() {
                         </div>
                       </div>
                     );
-                  })}
+                  <h2 className="text-sm font-black text-indigo-600 uppercase tracking-[0.3em] mb-6">Orchestration Layer</h2>
+                  <h3 className="text-5xl md:text-8xl font-black tracking-tighter text-gray-900 uppercase leading-[0.85]">
+                    Meet your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Swarm.</span>
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <AgentCard 
+                    name="The Strategist" 
+                    role="Market & Product Fit" 
+                    desc="Analyzes 2M+ market data points to ensure your product solves a real-world problem."
+                    color="bg-blue-500"
+                  />
+                  <AgentCard 
+                    name="The Chromatician" 
+                    role="Visual Identity" 
+                    desc="Generates accessible, high-conversion color palettes based on psychological triggers."
+                    color="bg-purple-500"
+                  />
+                  <AgentCard 
+                    name="The Architect" 
+                    role="Structural Logic" 
+                    desc="Designs the underlying information architecture and user flow hierarchies."
+                    color="bg-emerald-500"
+                  />
+                  <AgentCard 
+                    name="The Component Engineer" 
+                    role="React Implementation" 
+                    desc="Synthesizes production-ready Tailwind and React components with atomic precision."
+                    color="bg-orange-500"
+                  />
+                  <AgentCard 
+                    name="The Quality Validator" 
+                    role="Conflict Resolution" 
+                    desc="Acts as a senior peer-reviewer, arguing against design flaws before you see them."
+                    color="bg-rose-500"
+                  />
+                  <AgentCard 
+                    name="The SEO Alchemist" 
+                    role="Growth Optimization" 
+                    desc="Injects semantic HTML and meta-layer intelligence for organic search dominance."
+                    color="bg-indigo-500"
+                  />
                 </div>
               </div>
             </section>
 
-            {/* Testimonials */}
-            <section className="py-24 px-6 bg-gray-900 text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px]"></div>
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px]"></div>
-              <div className="max-w-6xl mx-auto relative z-10">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Why Businesses Love Us</h2>
-                  <p className="text-gray-400 text-lg max-w-2xl mx-auto">Real businesses, real results with AI automation.</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {[
-                    { quote: "AI automation transformed our operations by eliminating repetitive tasks. Scaling our workflow has never been easier!", author: "James Carter", role: "CEO at TechFlow Solutions" },
-                    { quote: "With AI, we cut manual work and improved accuracy. Our team now focuses on high-impact tasks.", author: "Sophia Martinez", role: "Operations Manager" }
-                  ].map((t, i) => (
-                    <div key={i} className="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10">
-                      <div className="flex gap-1 text-yellow-400 mb-6">
-                        {[1, 2, 3, 4, 5].map(s => <Sparkles key={s} size={16} />)}
-                      </div>
-                      <p className="text-xl font-medium leading-relaxed mb-8">"{t.quote}"</p>
-                      <div>
-                        <p className="font-bold">{t.author}</p>
-                        <p className="text-gray-400 text-sm">{t.role}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            {/* New: The "15-Scene" Efficiency Timeline */}
+            <section className="py-32 px-6 bg-gray-50/50">
+              <div className="max-w-5xl mx-auto">
+                 <div className="flex flex-col gap-24">
+                    <TimelineStep 
+                      number="01" 
+                      title="Intent Extraction" 
+                      desc="We don't just take your prompt; we interpret your vision and fill in the strategic gaps." 
+                    />
+                    <TimelineStep 
+                      number="02" 
+                      title="Agentic Argument" 
+                      desc="Our agents deliberate in a recursive loop to optimize the UI/UX for maximum engagement." 
+                      active
+                    />
+                    <TimelineStep 
+                      number="03" 
+                      title="Production Synthesis" 
+                      desc="Zero placeholders. We deliver high-fidelity designs and clean code in under 30 seconds." 
+                    />
+                 </div>
               </div>
             </section>
 
-
+            {/* New: Enterprise FAQ */}
+            <section className="py-32 px-6 bg-white">
+               <div className="max-w-3xl mx-auto">
+                  <h2 className="text-4xl font-black tracking-tight mb-16 text-center uppercase">Common Intelligence Queries</h2>
+                  <div className="space-y-8">
+                     <FAQItem 
+                       q="How is this different from basic AI builders?" 
+                       a="Standard AI builders use a single prompt. We use an orchestrator that manages 9 specialized agents that critique and refine each other's work." 
+                     />
+                     <FAQItem 
+                       q="Can I export the code to my own servers?" 
+                       a="Yes. Every generation provides a clean, production-ready React/Tailwind export that you can deploy anywhere." 
+                     />
+                     <FAQItem 
+                       q="Is the design really unique?" 
+                       a="Every palette, layout, and component is generated from scratch based on your startup's specific persona and goals." 
+                     />
+                  </div>
+               </div>
+            </section>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-100 py-12 text-center text-gray-500 font-medium">
-              <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md mx-auto mb-6">U</div>
-              <p>© 2026 Agentic UX. Built with AI.</p>
+            <footer className="bg-gray-900 text-white py-24 px-6">
+              <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+                 <div className="max-w-sm">
+                    <div className="w-10 h-10 bg-indigo-500 rounded-xl mb-6 flex items-center justify-center font-black text-lg shadow-lg shadow-indigo-500/20">A</div>
+                    <p className="text-gray-400 text-sm font-medium leading-relaxed">
+                      Agentic UX is the world's first multi-agent design ecosystem. We don't build websites; we build autonomous product teams.
+                    </p>
+                 </div>
+                 <div className="grid grid-cols-2 md:grid-cols-3 gap-16">
+                    <FooterColumn title="Platform" links={['Engine', 'Agents', 'Dashboard', 'Pricing']} />
+                    <FooterColumn title="Resources" links={['Documentation', 'API', 'Community', 'Research']} />
+                    <FooterColumn title="Legal" links={['Privacy', 'Terms', 'Security']} />
+                 </div>
+              </div>
+              <div className="max-w-7xl mx-auto pt-16 mt-16 border-t border-gray-800 text-center text-gray-500 text-[10px] font-black uppercase tracking-[0.4em]">
+                 © 2026 Agentic UX — The Future of Product Design
+              </div>
             </footer>
+
           </motion.div>
         )}
 

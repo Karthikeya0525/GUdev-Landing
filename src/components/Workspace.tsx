@@ -12,6 +12,7 @@ import { AnimatePresence } from "framer-motion";
 import ARPreview from "./ARPreview";
 import QRCodeModal from "./QRCodeModal";
 import CodeExport from "./CodeExport";
+import StitchChat from "./StitchChat";
 
 interface WorkspaceProps {
   initialData: any;
@@ -32,6 +33,7 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
   const [isPdfLoading, setIsPdfLoading] = useState(false);
   const [isArMode, setIsArMode] = useState(false);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [isStitchMode, setIsStitchMode] = useState(false);
 
   // Sync JSON changes to the data object
   useEffect(() => {
@@ -128,8 +130,20 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
             label="Source Code"
           />
           <button 
+            onClick={() => setIsStitchMode(!isStitchMode)}
+            className={cn(
+              "flex items-center px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ml-2 border",
+              isStitchMode 
+                ? "bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-200" 
+                : "text-indigo-500 bg-indigo-50/50 hover:bg-indigo-100/50 border-indigo-100"
+            )}
+          >
+            <Sparkles className={cn("h-4 w-4 mr-2", isStitchMode && "animate-pulse")} />
+            {isStitchMode ? "Stitching Mode Active" : "Stitch AI"}
+          </button>
+          <button 
             onClick={() => setIsQrModalOpen(true)}
-            className="flex items-center px-8 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider text-indigo-500 hover:text-indigo-600 bg-indigo-50/50 hover:bg-indigo-100/50 ml-2 border border-indigo-100"
+            className="flex items-center px-8 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider text-gray-500 hover:text-gray-600 bg-gray-50 hover:bg-gray-100 ml-2 border border-gray-200"
           >
             <Smartphone className="h-4 w-4 mr-2" />
             Scan for AR
@@ -204,7 +218,17 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
 
         {activeView === 'web' && (
           <div className="h-full w-full overflow-y-auto animate-in zoom-in-95 duration-500 bg-white">
-            <WebPreview data={parsedData} />
+            <WebPreview 
+              data={parsedData} 
+              isStitchMode={isStitchMode}
+              onStitch={(section, prompt) => {
+                // Simulate updating the data based on the section refinement
+                const newData = { ...parsedData };
+                if (section === 'hero') newData.tagline = `${prompt} (Stitched)`;
+                setParsedData(newData);
+                setJsonContent(JSON.stringify(newData, null, 2));
+              }}
+            />
           </div>
         )}
 
@@ -215,6 +239,14 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
         )}
 
       </main>
+
+      <StitchChat 
+        isStitchMode={isStitchMode} 
+        onRefine={(prompt) => {
+          // Simulate global refinement
+          console.log("Global refinement requested:", prompt);
+        }} 
+      />
     </div>
   );
 }

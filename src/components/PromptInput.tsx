@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, Zap } from "lucide-react";
+import { Sparkles, ArrowRight, Zap, ImagePlus, X } from "lucide-react";
 
 interface PromptInputProps {
   onSubmit: (prompt: string) => void;
@@ -15,6 +15,8 @@ interface PromptInputProps {
 
 export function PromptInput({ onSubmit, isLoading, initialValue }: PromptInputProps) {
   const [prompt, setPrompt] = useState(initialValue || "");
+  const [image, setImage] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (initialValue) {
@@ -24,7 +26,21 @@ export function PromptInput({ onSubmit, isLoading, initialValue }: PromptInputPr
 
   const handleSubmit = () => {
     if (!prompt.trim()) return;
-    onSubmit(prompt);
+    // For now, we append a notice about the sketch to the prompt
+    // In a production app, we would send the image base64 to the multimodal endpoint
+    const finalPrompt = image ? `${prompt}\n\n[Visual Reference Provided: ${image.substring(0, 50)}...]` : prompt;
+    onSubmit(finalPrompt);
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -45,6 +61,29 @@ export function PromptInput({ onSubmit, isLoading, initialValue }: PromptInputPr
               onChange={(e) => setPrompt(e.target.value)}
             />
             
+            {/* Image Preview Thumbnail */}
+            <AnimatePresence>
+              {image && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="absolute bottom-4 left-4 group/img"
+                >
+                  <div className="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-white shadow-xl ring-1 ring-black/5">
+                    <img src={image} className="w-full h-full object-cover" alt="Reference" />
+                    <button 
+                      onClick={() => setImage(null)}
+                      className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center text-white"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <span className="absolute -top-2 -right-2 bg-indigo-600 text-[8px] font-black text-white px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-lg">Sketch</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Corner Accent */}
             <div className="absolute top-0 right-0 p-2 opacity-50 pointer-events-none">
                 <Sparkles className="w-5 h-5 text-purple-400" />
@@ -53,9 +92,22 @@ export function PromptInput({ onSubmit, isLoading, initialValue }: PromptInputPr
 
         {/* Footer Actions */}
         <div className="flex justify-between items-center mt-6 pt-6 border-t border-gray-100/50">
-            <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                <Zap className="w-3 h-3 text-yellow-500" />
-                <span>AI Architect Ready</span>
+            <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                    <Zap className="w-3 h-3 text-yellow-500" />
+                    <span>AI Architect Ready</span>
+                </div>
+                
+                <div className="h-4 w-px bg-gray-100" />
+                
+                <label className="cursor-pointer group/upload relative">
+                  <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                  <div className="flex items-center gap-2 text-[10px] font-black text-indigo-500 uppercase tracking-widest hover:text-indigo-600 transition-colors">
+                    <ImagePlus className="w-4 h-4" />
+                    <span>Upload Sketch</span>
+                  </div>
+                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 group-hover/upload:w-full transition-all duration-300" />
+                </label>
             </div>
             
             <Button 

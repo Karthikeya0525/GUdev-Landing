@@ -27,6 +27,9 @@ export default function ResearchPage() {
     scrollToBottom();
   }, [messages, isLoading]);
 
+  const [isReadyToGenerate, setIsReadyToGenerate] = useState(false);
+  const [researchProgress, setResearchProgress] = useState(0);
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -49,6 +52,15 @@ export default function ResearchPage() {
       const data = await response.json();
       if (response.ok) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+        
+        // Simple heuristic to check if ready
+        if (data.reply.toLowerCase().includes("would you like to proceed") || data.reply.toLowerCase().includes("generate your blueprint")) {
+          setIsReadyToGenerate(true);
+          setResearchProgress(100);
+        } else {
+          // Increment progress slightly for each exchange
+          setResearchProgress(prev => Math.min(prev + 20, 90));
+        }
       } else {
         alert(data.error || "Something went wrong.");
       }
@@ -58,6 +70,16 @@ export default function ResearchPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const generatePRDFromResearch = () => {
+    // Collect all user messages as the consolidated prompt
+    const consolidatedPrompt = messages
+      .filter(m => m.role === 'user')
+      .map(m => m.content)
+      .join("\n");
+    
+    window.location.href = `/?prompt=${encodeURIComponent(consolidatedPrompt)}`;
   };
 
   return (
@@ -79,22 +101,58 @@ export default function ResearchPage() {
           </Link>
           <div className="hidden sm:block">
             <h1 className="text-lg font-bold tracking-tight text-gray-900">Agentic UX</h1>
-            <p className="text-xs font-semibold text-indigo-500 tracking-wider uppercase">Research Lab</p>
+            <p className="text-xs font-semibold text-indigo-500 tracking-wider uppercase">Deep Research Lab</p>
           </div>
         </div>
-        <div className="hidden sm:flex gap-6 text-sm font-semibold text-gray-500 items-center">
-          <Link href="/" className="hover:text-gray-900 transition-colors">Home</Link>
-          <Link href="/templates" className="hover:text-gray-900 transition-colors flex items-center gap-1.5">
-             <LayoutTemplate className="w-4 h-4"/> Templates
-          </Link>
-          <Link href="/research" className="text-indigo-600 bg-indigo-50 px-4 py-1.5 rounded-full border border-indigo-100/50 transition-colors flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4"/> Deep Dive
-          </Link>
+        
+        {/* Progress Bar */}
+        <div className="hidden md:flex flex-col items-center gap-2 w-1/3">
+          <div className="flex justify-between w-full text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            <span>Research Depth</span>
+            <span>{researchProgress}%</span>
+          </div>
+          <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden border border-gray-200/50">
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${researchProgress}%` }}
+              className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <AnimatePresence>
+            {isReadyToGenerate && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={generatePRDFromResearch}
+                className="bg-indigo-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg shadow-indigo-200 flex items-center gap-2 hover:bg-indigo-700 transition-all active:scale-95"
+              >
+                <Sparkles className="w-3 h-3" /> Generate PRD
+              </motion.button>
+            )}
+          </AnimatePresence>
+          <div className="hidden sm:flex gap-6 text-sm font-semibold text-gray-500 items-center">
+            <Link href="/" className="hover:text-gray-900 transition-colors">Home</Link>
+          </div>
         </div>
       </header>
 
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto p-4 md:p-8 w-full max-w-5xl mx-auto space-y-6">
+        {/* Research Banner */}
+        <div className="bg-indigo-600/5 border border-indigo-100 rounded-3xl p-6 mb-8 flex items-start gap-4">
+          <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-indigo-50">
+            <Bot className="text-indigo-600" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight mb-1">Deep PRD Interview Mode</h3>
+            <p className="text-xs text-gray-500 font-medium leading-relaxed">
+              Our AI is now in Orchestration Mode. It will ask you targeted questions to build a professional-grade PRD. Answer as detail as possible for better results.
+            </p>
+          </div>
+        </div>
         <AnimatePresence>
           {messages.map((m, idx) => (
             <motion.div 

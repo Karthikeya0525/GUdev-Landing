@@ -18,21 +18,41 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const fetchSessionAndProjects = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+    // 1. Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setUser(session.user);
-        const { data } = await supabase
-          .from('projects')
-          .select('*')
-          .order('created_at', { ascending: false });
-        setProjects(data || []);
+        fetchProjects(session.user.id);
+      } else {
+        setLoading(false);
       }
-      setLoading(false);
-    };
+    });
 
-    fetchSessionAndProjects();
+    // 2. Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setUser(session.user);
+        fetchProjects(session.user.id);
+      } else {
+        setUser(null);
+        setProjects([]);
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  const fetchProjects = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    
+    if (data) setProjects(data);
+    setLoading(false);
+  };
 
   const filteredProjects = projects.filter(p => 
     p.name.toLowerCase().includes(search.toLowerCase())

@@ -35,22 +35,42 @@ export async function POST(req: NextRequest) {
         "timeline_estimate": "Estimated time to MVP",
         "risks": ["Risk 1", "Risk 2"],
         "future_scope": "Future plans",
+        "ux_strategy": {
+          "primary_goal": "e.g., Conversion, Trust, Efficiency",
+          "rationale": "Deep explanation of why this layout was chosen based on UX laws (e.g. Hick's Law, F-Pattern).",
+          "psychological_triggers": ["Trust", "Urgency", "Calm"]
+        },
+        "color_theory": {
+          "palette_type": "Monochromatic | Analogous | Complementary",
+          "rationale": "Why these specific colors were chosen for this industry.",
+          "accessibility_rating": "AA | AAA"
+        },
         "design_system": {
           "layout_pattern": "dashboard | saas_landing | ecommerce | mobile_app",
           "style_keywords": "e.g., Soft shadows, brutalism, glassmorphism",
-          "typography": "Font family pairing"
+          "typography": {
+            "heading": "Font family",
+            "body": "Font family",
+            "pairing_rationale": "Why these fonts work together"
+          },
+          "tokens": {
+            "radius": "e.g., 0.5rem, 1.5rem, 0px",
+            "spacing": "e.g., compact, airy, standard",
+            "shadow": "e.g., soft, sharp, glow"
+          }
         },
         "branding_colors": {
-          "primary": "Hex code (e.g. #3B82F6)",
-          "secondary": "Hex code (e.g. #9333EA)",
-          "background": "Hex code (e.g. #F8FAFC)",
-          "text": "Hex code (e.g. #0F172A)"
+          "primary": "Hex code",
+          "secondary": "Hex code",
+          "background": "Hex code",
+          "text": "Hex code"
         }
       }
       
-      Rules for Design System:
-      - layout_pattern MUST be strictly one of: "dashboard", "saas_landing", "ecommerce", "mobile_app". Choose based on the startup's primary interface.
-      - Pick an industry-appropriate color palette according to UI/UX Pro Max guidelines.
+      Rules for Design Intelligence:
+      - layout_pattern MUST be strictly one of: "dashboard", "saas_landing", "ecommerce", "mobile_app".
+      - Pick an industry-appropriate color palette based on COLOR THEORY (e.g., Finance -> Trust/Blue, Food -> Appetite/Red-Yellow).
+      - Provide a detailed UX Strategy rationale explaining the placement of key elements.
       
       User Idea: "${prompt}"
     `;
