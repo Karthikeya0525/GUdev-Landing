@@ -38,14 +38,14 @@ export default function StitchChat({ onRefine, isStitchMode }: StitchChatProps) 
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[100] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="w-[400px] h-[550px] bg-white rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-100 mb-6 flex flex-col overflow-hidden"
+            className="w-[calc(100vw-2rem)] sm:w-[400px] h-[500px] sm:h-[550px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.15)] border border-gray-100 mb-4 sm:mb-6 flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="px-6 pt-6 pb-4 bg-gray-900 text-white">

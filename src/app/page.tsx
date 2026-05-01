@@ -221,19 +221,19 @@ function HomeContent() {
                   Agentic Discovery Lab v4.0
                 </motion.div>
 
-                <h1 className="text-5xl md:text-8xl font-black tracking-tight text-gray-900 leading-[0.9] mb-10 uppercase">
+                <h1 className="text-4xl md:text-8xl font-black tracking-tight text-gray-900 leading-[0.95] md:leading-[0.9] mb-10 uppercase">
                    Architect Your <br />
                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600">
                     Digital Empire.
                    </span>
                 </h1>
 
-                <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium mb-16 tracking-tight">
+                <p className="text-gray-500 text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-medium mb-16 tracking-tight px-4">
                   The first AI-native design engine that transforms raw intent into professional PRDs and production-ready React ecosystems.
                 </p>
 
                 {/* Agentic Generator Input - Enhanced */}
-                <div className="max-w-4xl mx-auto mb-24 relative group">
+                <div className="max-w-4xl mx-auto mb-24 relative group px-4 sm:px-0">
                   <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-400 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition-opacity" />
                   
                   {/* Decorative Floaters */}
@@ -252,19 +252,19 @@ function HomeContent() {
                     <Bot className="w-6 h-6 text-indigo-500" />
                   </motion.div>
 
-                  <div className="relative bg-white/70 backdrop-blur-xl p-3 rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.08)] border border-white/50">
+                  <div className="relative bg-white/70 backdrop-blur-xl p-2 sm:p-3 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.08)] border border-white/50">
                     <PromptInput onSubmit={handleGenerate} isLoading={loading} initialValue={templatePrompt} />
                   </div>
                 </div>
 
                 {/* Elite Social Proof */}
-                <div className="pt-16 border-t border-gray-100/80 max-w-5xl mx-auto">
+                <div className="pt-16 border-t border-gray-100/80 max-w-5xl mx-auto px-6">
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.5em] mb-12">POWERING THE NEXT UNICORNS</p>
-                  <div className="flex flex-wrap justify-center gap-16 items-center opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
-                    <span className="font-black text-3xl tracking-tighter uppercase">Nexus</span>
-                    <span className="font-black text-3xl tracking-tighter uppercase">Quantum</span>
-                    <span className="font-black text-3xl tracking-tighter uppercase">Aether</span>
-                    <span className="font-black text-3xl tracking-tighter uppercase">Loom</span>
+                  <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+                    <span className="font-black text-xl md:text-3xl tracking-tighter uppercase">Nexus</span>
+                    <span className="font-black text-xl md:text-3xl tracking-tighter uppercase">Quantum</span>
+                    <span className="font-black text-xl md:text-3xl tracking-tighter uppercase">Aether</span>
+                    <span className="font-black text-xl md:text-3xl tracking-tighter uppercase">Loom</span>
                   </div>
                 </div>
               </motion.div>
@@ -331,12 +331,11 @@ function HomeContent() {
                   </p>
                 </div>
 
-                <div className="relative w-full h-[600px] md:h-[800px] max-w-[800px] mx-auto flex items-center justify-center border-2 border-dashed border-gray-50 rounded-full">
-
+                {/* Desktop Circular View (Hidden on Mobile) */}
+                <div className="hidden lg:flex relative w-full h-[800px] max-w-[800px] mx-auto items-center justify-center border-2 border-dashed border-gray-50 rounded-full">
                   {/* SVG Background Connections */}
                   <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 800 800" fill="none">
                     <circle cx="400" cy="400" r="180" stroke="#6366f1" strokeWidth="2" strokeDasharray="8 8" />
-                    {/* Radial lines from center */}
                     {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
                       <line
                         key={angle}
@@ -349,49 +348,66 @@ function HomeContent() {
                   </svg>
 
                   {/* Core Node */}
-                  <div className="relative z-30 w-48 h-48 md:w-64 md:h-64 bg-gray-900 rounded-[3rem] shadow-[0_0_100px_rgba(79,70,229,0.2)] border border-gray-800 flex flex-col items-center justify-center p-8 text-center">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-indigo-500 rounded-2xl flex items-center justify-center text-white mb-4 shadow-xl shadow-indigo-500/40">
+                  <div className="relative z-30 w-64 h-64 bg-gray-900 rounded-[3rem] shadow-[0_0_100px_rgba(79,70,229,0.2)] border border-gray-800 flex flex-col items-center justify-center p-8 text-center">
+                    <div className="w-16 h-16 bg-indigo-500 rounded-2xl flex items-center justify-center text-white mb-4 shadow-xl shadow-indigo-500/40">
                       <Sparkles size={32} />
                     </div>
-                    <h3 className="text-lg md:text-2xl font-bold text-white mb-1">Agentic UX</h3>
+                    <h3 className="text-2xl font-bold text-white mb-1">Agentic UX</h3>
                     <p className="text-indigo-400 text-[10px] font-bold uppercase tracking-[0.2em]">AI Pipeline System</p>
                   </div>
 
-                  {/* Surrounding Agents/Nodes */}
+                  {/* Nodes */}
                   {[
-                    { title: "User", sub: "Founder / Designer / PM", color: "bg-emerald-50 text-emerald-900 border-emerald-200", angle: 270, label: "Idea Input / Approval" },
-                    { title: "Stakeholders", sub: "Receive PRD export", color: "bg-amber-50 text-amber-900 border-amber-200", angle: 315, label: "PRD Export" },
-                    { title: "File Storage", sub: "Artifacts + Assets", color: "bg-indigo-50 text-indigo-900 border-indigo-200", angle: 0, label: "Save/Retrieve" },
-                    { title: "Design Team", sub: "Receives UI assets", color: "bg-rose-50 text-rose-900 border-rose-200", angle: 45, label: "UI Visuals" },
-                    { title: "Developer", sub: "Receives code output", color: "bg-teal-50 text-teal-900 border-teal-200", angle: 90, label: "React + Tailwind" },
-                    { title: "Mobile Device", sub: "AR Preview (Optional)", color: "bg-red-50 text-red-900 border-red-200", angle: 135, label: "WebXR Scene" },
-                    { title: "LLM API", sub: "Claude / GPT-4", color: "bg-blue-50 text-blue-900 border-blue-200", angle: 180, label: "Agent Prompts" },
-                    { title: "PRD Document", sub: "User-uploaded input", color: "bg-orange-50 text-orange-900 border-orange-200", angle: 225, label: "Upload PRD" }
+                    { title: "User", sub: "Founder / Designer", color: "bg-emerald-50 text-emerald-900 border-emerald-200", angle: 270, label: "Idea Input" },
+                    { title: "Stakeholders", sub: "Receive PRD", color: "bg-amber-50 text-amber-900 border-amber-200", angle: 315, label: "PRD Export" },
+                    { title: "Storage", sub: "Artifacts", color: "bg-indigo-50 text-indigo-900 border-indigo-200", angle: 0, label: "Save" },
+                    { title: "Design", sub: "UI assets", color: "bg-rose-50 text-rose-900 border-rose-200", angle: 45, label: "Visuals" },
+                    { title: "Developer", sub: "Code output", color: "bg-teal-50 text-teal-900 border-teal-200", angle: 90, label: "React + Tailwind" },
+                    { title: "Mobile", sub: "AR Preview", color: "bg-red-50 text-red-900 border-red-200", angle: 135, label: "WebXR" },
+                    { title: "LLM API", sub: "GPT-4 / Claude", color: "bg-blue-50 text-blue-900 border-blue-200", angle: 180, label: "Agent Prompts" },
+                    { title: "Document", sub: "User PRD", color: "bg-orange-50 text-orange-900 border-orange-200", angle: 225, label: "Input" }
                   ].map((node, i) => {
-                    const radius = 280; // Safer radius
+                    const radius = 280;
                     const x = radius * Math.cos((node.angle * Math.PI) / 180);
                     const y = radius * Math.sin((node.angle * Math.PI) / 180);
-
                     return (
-                      <div
-                        key={i}
-                        className="absolute z-20 flex flex-col items-center"
-                        style={{
-                          left: `calc(50% + ${x}px)`,
-                          top: `calc(50% + ${y}px)`,
-                          transform: 'translate(-50%, -50%)'
-                        }}
-                      >
-                        <div className={`px-4 py-3 md:px-6 md:py-4 rounded-2xl border shadow-lg text-center min-w-[140px] md:min-w-[180px] ${node.color}`}>
-                          <h4 className="font-bold text-[10px] md:text-sm uppercase tracking-wide">{node.title}</h4>
-                          <p className="text-[9px] md:text-[10px] font-medium opacity-70 mt-1">{node.sub}</p>
+                      <div key={i} className="absolute z-20 flex flex-col items-center" style={{ left: `calc(50% + ${x}px)`, top: `calc(50% + ${y}px)`, transform: 'translate(-50%, -50%)' }}>
+                        <div className={`px-6 py-4 rounded-2xl border shadow-lg text-center min-w-[180px] ${node.color}`}>
+                          <h4 className="font-bold text-sm uppercase tracking-wide">{node.title}</h4>
+                          <p className="text-[10px] font-medium opacity-70 mt-1">{node.sub}</p>
                         </div>
-                        <div className="mt-2 px-2 py-1 bg-white border border-gray-100 rounded-full shadow-sm text-[8px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                        <div className="mt-2 px-2 py-1 bg-white border border-gray-100 rounded-full shadow-sm text-[9px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
                           {node.label}
                         </div>
                       </div>
                     );
                   })}
+                </div>
+
+                {/* Mobile Responsive View (Card Stack) */}
+                <div className="lg:hidden space-y-4 mb-20">
+                  <div className="bg-gray-900 p-8 rounded-[2rem] text-center mb-8 border border-gray-800">
+                    <Sparkles className="w-10 h-10 text-indigo-500 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-white mb-2">Agentic UX Engine</h3>
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-[0.2em]">Mobile Adaptive Pipeline</p>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      { title: "User Input", desc: "Intent extraction & Persona definition", icon: <Users size={20} /> },
+                      { title: "Agent Swarm", desc: "9-Stage cross-validation engine", icon: <Bot size={20} /> },
+                      { title: "Live Code", desc: "Production-ready React & Tailwind", icon: <Zap size={20} /> }
+                    ].map((step, i) => (
+                      <div key={i} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-6">
+                        <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 shrink-0">
+                          {step.icon}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900">{step.title}</h4>
+                          <p className="text-gray-500 text-xs font-medium">{step.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="text-center mb-16">

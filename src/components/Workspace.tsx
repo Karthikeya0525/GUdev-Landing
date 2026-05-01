@@ -103,51 +103,54 @@ export default function Workspace({ initialData, generationId, onRegenerate, onR
           </div>
         </div>
 
-        {/* 🔘 VIEW TOGGLE BUTTONS */}
-        <div className="bg-gray-100 p-1.5 rounded-full flex items-center shadow-inner border border-gray-200">
-          <TabButton 
-            active={activeView === 'json'} 
-            onClick={() => setActiveView('json')}
-            icon={<Code2 className="h-4 w-4 mr-2" />}
-            label="JSON Editor"
-          />
-          <TabButton 
-            active={activeView === 'prd'} 
-            onClick={() => setActiveView('prd')}
-            icon={<FileText className="h-4 w-4 mr-2" />}
-            label="PRD Preview"
-          />
-          <TabButton 
-            active={activeView === 'web'} 
-            onClick={() => setActiveView('web')}
-            icon={<Monitor className="h-4 w-4 mr-2" />}
-            label="Web Preview"
-          />
-          <TabButton 
-            active={activeView === 'code'} 
-            onClick={() => setActiveView('code')}
-            icon={<Code2 className="h-4 w-4 mr-2" />}
-            label="Source Code"
-          />
-          <button 
-            onClick={() => setIsStitchMode(!isStitchMode)}
-            className={cn(
-              "flex items-center px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ml-2 border",
-              isStitchMode 
-                ? "bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-200" 
-                : "text-indigo-500 bg-indigo-50/50 hover:bg-indigo-100/50 border-indigo-100"
-            )}
-          >
-            <Sparkles className={cn("h-4 w-4 mr-2", isStitchMode && "animate-pulse")} />
-            {isStitchMode ? "Stitching Mode Active" : "Stitch AI"}
-          </button>
-          <button 
-            onClick={() => setIsQrModalOpen(true)}
-            className="flex items-center px-8 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider text-gray-500 hover:text-gray-600 bg-gray-50 hover:bg-gray-100 ml-2 border border-gray-200"
-          >
-            <Smartphone className="h-4 w-4 mr-2" />
-            Scan for AR
-          </button>
+        {/* 🔘 VIEW TOGGLE BUTTONS - Responsive Container */}
+        <div className="w-full md:w-auto overflow-x-auto no-scrollbar py-1">
+          <div className="bg-gray-100 p-1 rounded-full flex items-center shadow-inner border border-gray-200 min-w-max">
+            <TabButton 
+              active={activeView === 'json'} 
+              onClick={() => setActiveView('json')}
+              icon={<Code2 className="h-4 w-4 sm:mr-2" />}
+              label={<span className="hidden sm:inline">JSON Editor</span>}
+            />
+            <TabButton 
+              active={activeView === 'prd'} 
+              onClick={() => setActiveView('prd')}
+              icon={<FileText className="h-4 w-4 sm:mr-2" />}
+              label={<span className="hidden sm:inline">PRD Preview</span>}
+            />
+            <TabButton 
+              active={activeView === 'web'} 
+              onClick={() => setActiveView('web')}
+              icon={<Monitor className="h-4 w-4 sm:mr-2" />}
+              label={<span className="hidden sm:inline">Web Preview</span>}
+            />
+            <TabButton 
+              active={activeView === 'code'} 
+              onClick={() => setActiveView('code')}
+              icon={<Code2 className="h-4 w-4 sm:mr-2" />}
+              label={<span className="hidden sm:inline">Source Code</span>}
+            />
+            <button 
+              onClick={() => setIsStitchMode(!isStitchMode)}
+              className={cn(
+                "flex items-center px-4 py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider ml-1 border",
+                isStitchMode 
+                  ? "bg-indigo-600 text-white border-indigo-500" 
+                  : "text-indigo-500 bg-white border-gray-200"
+              )}
+            >
+              <Sparkles className={cn("h-3 w-3 sm:h-4 sm:w-4 sm:mr-2", isStitchMode && "animate-pulse")} />
+              <span className="hidden sm:inline">{isStitchMode ? "Active" : "Stitch"}</span>
+            </button>
+            <button 
+              onClick={() => setIsQrModalOpen(true)}
+              className="flex items-center px-4 py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider text-gray-500 bg-white ml-1 border border-gray-200"
+            >
+              <Smartphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+              <span className="hidden sm:inline">AR</span>
+            </button>
+          </div>
+        </div>
         </div>
 
         <AnimatePresence>
